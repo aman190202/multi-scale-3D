@@ -2,3 +2,8 @@
 /0001
 multi-scale-dataset
 .DS_Store
+/mscale_env
+*.vscode
+/logs
+*.sif
+/satellite_to_street_dataset
