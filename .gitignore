@@ -7,3 +7,5 @@ multi-scale-dataset
 /logs
 *.sif
 /satellite_to_street_dataset
+__pycache__/
+map-anything/
