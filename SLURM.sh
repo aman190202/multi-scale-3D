@@ -59,6 +59,16 @@ export SCENE=CIT-Brown-University
 # pip install "git+https://github.com/facebookresearch/map-anything.git@fde8425513178bb4f89fba9828193e6be3ece248#egg=map-anything[all]"
 
 # Using a stride 4 will only select every 4th image for map-anything inference ; we are doing this to not overload the memory 
-python map-anything-inference --scene_dir $DATASET/$SCENE-MapAnything --memory_efficient_inference -stride 4
+python map-anything-inference.py --scene_dir $DATASET/$SCENE-MapAnything --memory_efficient_inference --stride 1
 
 
+python /users/aagar133/scratch/multi-scale-3D/map-anything/scripts/make_pointcloud_pairs_gif.py  \
+  --images_dir $DATASET/$SCENE/images \
+  --stride 1 \
+  --fps 5 \
+  --conf_percentile 0 \
+  --filter_black_bg \
+  --filter_white_bg \
+  --end_index 450 \
+  --points_per_frame 40000 \
+  --output pointcloud_pairs.gif

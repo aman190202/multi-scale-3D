@@ -24,6 +24,7 @@ import torch.nn.functional as F
 import trimesh
 from PIL import Image
 from torchvision import transforms as tvf
+from utils.colmap_utils import colmap_to_json
 
 from mapanything.models import MapAnything
 from mapanything.third_party.np_to_pycolmap import (
@@ -583,7 +584,7 @@ def demo_fn(args):
     os.makedirs(sparse_reconstruction_dir, exist_ok=True)
     reconstruction.write(sparse_reconstruction_dir)
 
-    from colmap_utils import colmap_to_json
+
     images_registered = colmap_to_json(Path(args.scene_dir) / "sparse", Path(args.scene_dir))
     print(f"Number of Images registered: {images_registered}")
 

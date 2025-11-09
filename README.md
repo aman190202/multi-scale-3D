@@ -14,3 +14,8 @@ source /oscar/runtime/software/external/miniconda3/23.11.0/etc/profile.d/conda.s
 conda activate $SCRATCH/mscale_env
 ```
 
+## Observations : 
+
+	1.	The COLMAP reconstruction reports the most accurate angular separation between the camera poses of `frame_00001.jpeg` and `frame_000449.jpeg`, measuring 89.8 degrees.
+	2.	When the same dataset is re-inferred using every third image (to reduce memory usage), the estimated angular difference between `frame_00001.jpeg` and `frame_000449.jpeg` decreases to 83.6529 degrees.
+	3.	A subsequent inference under the same every-third-image sampling yields an angular difference of 82.604 degrees between `frame_00001.jpeg` and `frame_000448.jpeg`.
