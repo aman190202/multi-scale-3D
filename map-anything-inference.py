@@ -116,7 +116,7 @@ def parse_args():
 
 
 def load_and_preprocess_images_square(
-    image_path_list, target_size=1024, data_norm_type=None, stride = 1
+    image_path_list, target_size=1024, data_norm_type=None
 ):
     """
     Load and preprocess images by center padding to square and resizing to target size.
@@ -158,13 +158,7 @@ def load_and_preprocess_images_square(
             f"Unknown image normalization type: {data_norm_type}. Available options: {list(IMAGE_NORMALIZATION_DICT.keys())}"
         )
 
-    pos = int(-1)
     for image_path in image_path_list:
-        
-        # Only allow every stride'th image
-        pos += 1
-        if(pos % stride != 0):
-            continue
 
         # Open image
         img = Image.open(image_path)
@@ -405,7 +399,9 @@ def demo_fn(args):
     image_path_list = sorted(glob.glob(os.path.join(image_dir, "*")))
     if len(image_path_list) == 0:
         raise ValueError(f"No images found in {image_dir}")
-    base_image_path_list = [os.path.basename(path) for path in image_path_list]
+    # Respect stride when building the list of names used in reconstruction
+    selected_image_path_list = image_path_list[:: args.stride]
+    base_image_path_list = [os.path.basename(path) for path in selected_image_path_list]
 
     # Load images and original coordinates
     # Load Image in 1024, while running MapAnything with 518
@@ -413,7 +409,7 @@ def demo_fn(args):
     img_load_resolution = 1024
 
     images, original_coords = load_and_preprocess_images_square(
-        image_path_list, img_load_resolution, model.encoder.data_norm_type, stride = args.stride
+        selected_image_path_list, img_load_resolution, model.encoder.data_norm_type
     )
     images = images.to(device)
     original_coords = original_coords.to(device)
